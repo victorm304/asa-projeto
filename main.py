@@ -75,7 +75,7 @@ def update_virtualdomains(domains_array):
             
             os.chdir('../www')
             with open('index.html','w') as arquivo:
-                arquivo.write('Dominio no ar!')
+                arquivo.write("O dominio {0} esta no ar!".format(i))
         
             
 def main():
