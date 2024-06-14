@@ -26,17 +26,18 @@ def atualizar_httpdconf(domains_array):
 </Directory>"""
         arquivo.write(header)
 
-    with open('httpd.conf.projeto', 'a') as arquivo:
-        for domain_name in domains_array[1:]:
-            body = """\n\n<VirtualHost {0}:80>
-    ServerName www.{1}
-    ServerAlias {1}
-    DocumentRoot "/var/projeto-asa/dominios/{1}/www"
-    ErrorLog "/var/projeto-asa/dominios/{1}/logs/error.log"
-    CustomLog "/var/projeto-asa/dominios/{1}/logs/access.log" common
-</VirtualHost>""".format(ipv4, domain_name)
+    if domains_array[1:] != 0:
+        with open('httpd.conf.projeto', 'a') as arquivo:
+            for domain_name in domains_array[1:]:
+                body = """\n\n<VirtualHost {0}:80>
+        ServerName www.{1}
+        ServerAlias {1}
+        DocumentRoot "/var/projeto-asa/dominios/{1}/www"
+        ErrorLog "/var/projeto-asa/dominios/{1}/logs/error.log"
+        CustomLog "/var/projeto-asa/dominios/{1}/logs/access.log" common
+    </VirtualHost>""".format(ipv4, domain_name)
 
-            arquivo.write(body)
+                arquivo.write(body)
 
 def mysql_check():
     comando = "/var/projeto-asa/scripts/mysql-connect.sh" # Os scripts devem estar em /var/projeto-asa/scripts
@@ -54,6 +55,8 @@ def update_virtualdomains(domains_array):
                 os.removedirs(i)
             except NotADirectoryError:
                 os.remove(i)
+            except OSError:
+                os.system('rm -rf {0}'.format(i))
                 
     for i in domains_array[1:]:
         os.chdir('/var/projeto-asa/dominios')
