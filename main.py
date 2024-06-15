@@ -9,7 +9,7 @@ def check_ipv4_address():
 
     if ip.startswith('192.168.'):
         return ip
-    
+
     else:
         print('Erro ao obter endereço Ipv4.')
         raise SystemExit
@@ -18,7 +18,7 @@ def check_ipv4_address():
 def atualizar_httpdconf(domains_array):
     os.chdir('/var/projeto-asa')
     ipv4 = check_ipv4_address()
-    
+
     with open('httpd.conf.projeto', 'w') as arquivo:
         header = """<Directory /var/projeto-asa/dominios>
     AllowOverride All
@@ -57,7 +57,7 @@ def update_virtualdomains(domains_array):
                 os.remove(i)
             except OSError:
                 os.system('rm -rf {0}'.format(i))
-                
+
     for i in domains_array[1:]:
         os.chdir('/var/projeto-asa/dominios')
         # Verificia se o diretório existe
@@ -66,22 +66,34 @@ def update_virtualdomains(domains_array):
             os.makedirs('{0}'.format(i))
             os.makedirs('{0}/www'.format(i))
             os.makedirs('{0}/logs'.format(i))
-            
+
             os.chdir('{0}/logs'.format(i))
             with open('error.log', 'w') as arquivo:
                 pass
             with open('access.log', 'w') as arquivo:
                 pass
-            
+
             os.chdir('../www')
             with open('index.html','w') as arquivo:
                 arquivo.write("O dominio {0} esta no ar!".format(i))
-        
-            
+
+# Chama um script que reinicia o apache e o bind
+def apache_reload():
+    caminho_script = '/var/projeto-asa/scripts/reloadservices.sh'
+    processo = subprocess.Popen([caminho_script], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = processo.communicate()
+
+    if processo.returncode == 0:
+        print(stdout.decode('utf-8'))
+
+    else:
+        print(stderr.decode('utf-8'))
+
 def main():
     dominios = mysql_check().splitlines()
     atualizar_httpdconf(domains_array=dominios)
     update_virtualdomains(domains_array=dominios)
+    apache_reload()
 
 if __name__ == "__main__":
     main()
