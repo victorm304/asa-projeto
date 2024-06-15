@@ -3,6 +3,7 @@
 # Depois, coloque os arquivos main.py, exeroot.c, mysql-connect.sh, reloadservices.sh dentro do diretório scripts
 # Compile o arquivo exeroot.c, e depois dê o comando chmod a+s no arquivo binário gerado
 # Agora basta dar aos demais arquivos a permissão de execução com chmod, e então basta executar o main.py, atente-se que o script vai buscar os domínios na coluna domain da tabela domains
+
 import subprocess
 import os
 
