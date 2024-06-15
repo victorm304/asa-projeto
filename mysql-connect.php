@@ -7,24 +7,18 @@ $user = "containerNN";
 $senha ="senhadocontainer";
 $bd = "BDNN";
 
-$conn = new mysqli($host, $user, $senha, $bd);
-
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
+$conectar = new mysqli($host, $user, $senha, $bd);
 
 $sql = "SELECT domain FROM domains";
 
-$result = $conn->query($sql);
+$result = $conectar->query($sql);
 
 if ($result->num_rows > 0) {
     echo "domain\n";
     while ($row = $result->fetch_assoc()) {
         echo $row["domain"] . "\n";
     }
-} else {
-    echo "Nenhum domínio encontrado.\n";
 }
 
-$conn->close();
+$conectar->close();
 ?>
