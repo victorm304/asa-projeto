@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Este script basicamente cria e remove domínios e atualiza o httpd.conf.projeto, se o domínio estiver no banco ele cria, se não estiver ele remove.
+
 # Para conseguir executar este script, crie o diretório projeto-asa em /var, em seguida dentro de projeto-asa crie o diretorio "scripts" e o diretório "dominios"
 # Depois, coloque os arquivos main.py, exeroot.c, mysql-connect.sh, mysql-connect.php, reloadservices.sh dentro do diretório scripts
 # Compile o arquivo exeroot.c, e depois dê o comando chmod a+s no arquivo binário gerado
