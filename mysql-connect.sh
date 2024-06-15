@@ -1,4 +1,5 @@
 #!/bin/bash
+# Preencha com os dados do seu container
 host="192.168.102.100"
 user="containerNN"
 senha="senhadocontainer"
