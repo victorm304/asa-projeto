@@ -44,8 +44,9 @@ def atualizar_httpdconf(domains_array):
 
                 arquivo.write(body)
 
+# Consulta o banco de dados
 def mysql_check():
-    comando = "/var/projeto-asa/scripts/mysql-connect.sh" # Os scripts devem estar em /var/projeto-asa/scripts
+    comando = "/var/projeto-asa/scripts/mysql-connect.php" # Os scripts devem estar em /var/projeto-asa/scripts
     processo = subprocess.Popen(comando, shell=True, stdout=subprocess.PIPE)
     saida, _ = processo.communicate()
 
